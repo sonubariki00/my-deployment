@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-hello-world-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-hello-world
+  template:
+    metadata:
+      labels:
+        app: python-hello-world
+    spec:
+      containers:
+      - name: python-hello-world-container
+        image: mallikarjunkadi11/python-hello-world:latest  # Replace with your Docker image name
+        ports:
+        - containerPort: 8000  # Port your application listens on inside the container
