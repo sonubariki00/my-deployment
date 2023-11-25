@@ -14,7 +14,7 @@ stages
   
    stage("Build & Test"){
             steps{
-                sh "docker build . -t hello-world-app"
+                sh "cd my-python-app && docker build . -t hello-world-app"
             }
         }
 
