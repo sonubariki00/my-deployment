@@ -1,0 +1,31 @@
+pipeline
+{
+    agent any
+stages
+{
+  stage('CheckOut')
+  {
+    steps
+    {
+         git url: "https://github.com/Mallikarjunakadi/my-deployment.git", branch: "main"
+         sh 'echo Passed'
+    }
+  }
+  
+   stage("Build & Test"){
+            steps{
+                sh "docker build . -t Hello-world-App"
+            }
+        }
+
+  stage("Push to DockerHub"){
+            steps{
+                withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
+                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+                    sh "docker tag Hello-world-App ${env.dockerHubUser}/Hello-world-App:latest"
+                    sh "docker push ${env.dockerHubUser}/Hello-world-App:latest" 
+                }
+            }
+        }
+}
+}
