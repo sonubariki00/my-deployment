@@ -14,7 +14,7 @@ stages
   
    stage("Build & Test"){
             steps{
-                sh "docker build . -t Hello-world-App"
+                sh "docker build . -t hello-world-app"
             }
         }
 
@@ -22,8 +22,8 @@ stages
             steps{
                 withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                    sh "docker tag Hello-world-App ${env.dockerHubUser}/Hello-world-App:latest"
-                    sh "docker push ${env.dockerHubUser}/Hello-world-App:latest" 
+                    sh "docker tag hello-world-app ${env.dockerHubUser}/hello-world-app:latest"
+                    sh "docker push ${env.dockerHubUser}/hello-world-app:latest" 
                 }
             }
         }
