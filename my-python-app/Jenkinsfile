@@ -6,6 +6,12 @@ pipeline {
     }
   }
     stages {
+    stage('Clean Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+        
         stage('CheckOut') {
             steps {
                 git url: "https://github.com/Mallikarjunakadi/my-deployment.git", branch: "main"
