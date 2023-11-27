@@ -9,4 +9,4 @@ spec:
       targetPort: 8000 # Port your application listens on inside the container
       nodePort: 30000 # Choose an available port or leave it empty for automatic assignment
   selector:
-    app: python-hello-world # Match this label with your deployment's selector
+    app: hello-world-app # Match this label with your deployment's selector

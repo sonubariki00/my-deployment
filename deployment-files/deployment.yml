@@ -6,14 +6,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: python-hello-world
+      app: hello-world-app 
   template:
     metadata:
       labels:
-        app: python-hello-world
+        app: hello-world-app 
     spec:
       containers:
       - name: python-hello-world-container
-        image: mallikarjunkadi11/python-hello-world:latest  # Replace with your Docker image name
+        image: mallikarjunkadi11/hello-world-app:replaceImageTag  # Replace with your Docker image name
         ports:
         - containerPort: 8000  # Port your application listens on inside the container
