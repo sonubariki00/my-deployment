@@ -36,8 +36,8 @@ pipeline {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                  script {
             def buildNumber = env.BUILD_NUMBER  // Fetching the Jenkins BUILD_NUMBER variable
-            def firstBuildNumber = sh(script: "grep -oP 'firstBuildNumber:\\K\\d+' deployment-files/deployment.yml | head -n1", returnStdout: true).trim()
-            sh "sed -i \"s/firstBuildNumber:${firstBuildNumber}/${buildNumber}/g\" deployment-files/deployment.yml"
+            sh "sed -i 's@image: mallikarjunkadi11/hello-world-app:[0-9]*@image: mallikarjunkadi11/hello-world-app:${buildNumber}@' deployment-files/deployment.yml"
+            sh "cat deployment-files/deployment.yml"  // Optional: Print updated file content
                 sh '''
                     git config user.email "mallikarjunkadi11@gmail.com"
                     git config user.name "Mallikarjunakadi"
