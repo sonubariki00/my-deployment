@@ -6,14 +6,14 @@ pipeline {
         
         stage('CheckOut') {
             steps {
-                git url: "https://github.com/Mallikarjunakadi/my-deployment.git", branch: "main"
+                git url: "https://github.com/sonubariki00/my-deployment.git", branch: "main"
                 sh 'echo Passed'
             }
         }
 
         stage('Build and Push Docker Image') {
             environment {
-                DOCKER_IMAGE = "mallikarjunkadi11/hello-world-app:${BUILD_NUMBER}"
+                DOCKER_IMAGE = "champ4356/hello-world-app:${BUILD_NUMBER}"
                 // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
                 REGISTRY_CREDENTIALS = credentials('dockerHub')
             }
@@ -30,17 +30,17 @@ pipeline {
         stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "my-deployment"
-            GIT_USER_NAME = "Mallikarjunakadi"
+            GIT_USER_NAME = "sonubariki00"
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                  script {
             def buildNumber = env.BUILD_NUMBER  // Fetching the Jenkins BUILD_NUMBER variable
-            sh "sed -i 's@image: mallikarjunkadi11/hello-world-app:[0-9]*@image: mallikarjunkadi11/hello-world-app:${buildNumber}@' deployment-files/deployment.yml"
+            sh "sed -i 's@image: champ4356/hello-world-app:[0-9]*@image: champ4356/hello-world-app:${buildNumber}@' deployment-files/deployment.yml"
             sh "cat deployment-files/deployment.yml"  // Optional: Print updated file content
                 sh '''
-                    git config user.email "mallikarjunkadi11@gmail.com"
-                    git config user.name "Mallikarjunakadi"
+                    git config user.email "sonubariki15@gmail.com"
+                    git config user.name "sonubariki00"
                     git add deployment-files/deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
